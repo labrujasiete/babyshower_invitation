@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
    
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -50,15 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: maxWidth,
                   height: maxHeight,
                   decoration: BoxDecoration(
-                    color: Color(0xffF9B8CA),
+                    color: const Color(0xffF9B8CA),
                     image: DecorationImage(
-                      image: AssetImage('./assets/images/floral_background.png',),
+                      image: const AssetImage('./assets/images/floral_background.png',),
                       opacity: .3,
                       fit: BoxFit.none,
                       repeat: ImageRepeat.repeat,
                       scale: 2,
                       colorFilter: ColorFilter.mode(
-                        Color(0xffFCDEE6).withOpacity(0), // Apply opacity
+                        const Color(0xffFCDEE6).withOpacity(0), // Apply opacity
                         BlendMode.multiply,
                       ),
                     )
@@ -70,19 +70,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       // color: const Color(0xffFDF7F8),
                       color: const Color(0xffFDF7F8),
                       image: DecorationImage(
-                        image: AssetImage('./assets/images/paper_texture.jpg',),
+                        image: const AssetImage('./assets/images/paper_texture.jpg',),
                         opacity: .3,
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
-                          Color(0xffFCDEE6).withOpacity(0), // Apply opacity
+                          const Color(0xffFCDEE6).withOpacity(0), // Apply opacity
                           BlendMode.multiply,
                         ),
                       ),
                       boxShadow: [
 
                         BoxShadow(
-                          color: Color(0xFF45112e).withOpacity(0.5),
-                          offset: Offset(0, 0),
+                          color: const Color(0xFF45112e).withOpacity(0.5),
+                          offset: const Offset(0, 0),
                           blurRadius: 50,
                           spreadRadius: 12,
                         ),
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.tituloPrincipal, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.cardo(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         letterSpacing: 5,
                                         color: Color(0xffB38F84),
                                         fontSize: 30,
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.subTituloPrincipal, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.cardo(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         letterSpacing: 5,
                                         color: Color(0xffB38F84),
                                         fontSize: 30,
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.mensajePrincipal, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         letterSpacing: 5,
                                         color: Color(0xffD46E89),
                                         fontSize: 17,
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.hora, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         color: Color(0xffB38F84),
                                         fontSize: 17,
                                         fontWeight: FontWeight.w700,
@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Variables.diaDeLaSemana, 
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.cardo(
-                                                textStyle: TextStyle( 
+                                                textStyle: const TextStyle( 
                                                   color: Color(0xffD87D96),
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w700,
@@ -214,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Variables.diaNumerico, 
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.lora(
-                                          textStyle: TextStyle( 
+                                          textStyle: const TextStyle( 
                                             color: Color(0xffD87D96),
                                             fontSize: 42,
                                             fontWeight: FontWeight.w700,
@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Variables.mes, 
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.cardo(
-                                                textStyle: TextStyle( 
+                                                textStyle: const TextStyle( 
                                                   color: Color(0xffD87D96),
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w700,
@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.anio, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         color: Color(0xffB38F84),
                                         fontSize: 17,
                                         fontWeight: FontWeight.w700,
@@ -284,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Variables.mensajeSecundario, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         letterSpacing: 5,
                                         color: Color(0xffD46E89),
                                         fontSize: 17,
@@ -332,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   const SizedBox(height: 7),
 
-                                  NameInput(),
+                                  const NameInput(),
 
                                 ],
                               ),
@@ -372,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   
                                   Container(
-                                    margin: EdgeInsets.symmetric(vertical: 7),
+                                    margin: const EdgeInsets.symmetric(vertical: 7),
                                     width: 35,
                                     height: 35,
                                     child: Image.asset('./assets/icons/google-calendar.png')
@@ -386,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       textAlign: TextAlign.center,
                                       softWrap: true,
                                       style: GoogleFonts.lora(
-                                        textStyle: TextStyle( 
+                                        textStyle: const TextStyle( 
                                           color: Colors.white,
                                           fontSize: 17,
                                           fontWeight: FontWeight.w400
@@ -406,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               textAlign: TextAlign.center,
                               softWrap: true,
                               style: GoogleFonts.lora(
-                                textStyle: TextStyle( 
+                                textStyle: const TextStyle( 
                                   color: Color(0xffB38F84),
                                   letterSpacing: 3,
                                   fontSize: 21,
@@ -453,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               textAlign: TextAlign.center,
                               softWrap: true,
                               style: GoogleFonts.lora(
-                                textStyle: TextStyle( 
+                                textStyle: const TextStyle( 
                                   color: Color(0xffB38F84),
                                   letterSpacing: 3,
                                   fontSize: 21,
@@ -473,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 textAlign: TextAlign.center,
                                 softWrap: true,
                                 style: GoogleFonts.lora(
-                                  textStyle: TextStyle( 
+                                  textStyle: const TextStyle( 
                                     color: Color(0xffD46E89),
                                     letterSpacing: 3,
                                     fontSize: 17,
@@ -504,7 +504,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textAlign: TextAlign.center,
                                     softWrap: true,
                                     style: GoogleFonts.lora(
-                                      textStyle: TextStyle( 
+                                      textStyle: const TextStyle( 
                                         color: Colors.white,
                                         fontSize: 17,
                                         fontWeight: FontWeight.w500
@@ -562,12 +562,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: maxWidth,
                       height: maxHeight,
                       decoration: BoxDecoration(
-                        color: Color(0xffFCDEE6),
+                        color: const Color(0xffFCDEE6),
                         image: DecorationImage(
-                          image: AssetImage('./assets/images/floral_swril.png',),
+                          image: const AssetImage('./assets/images/floral_swril.png',),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                            Color(0xffFCDEE6).withOpacity(0.5), // Apply opacity
+                            const Color(0xffFCDEE6).withOpacity(0.5), // Apply opacity
                             BlendMode.dstATop,
                           ),
                         )
@@ -593,7 +593,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           underLidPosition = -maxWidth;
                         });
                     
-                        await Future.delayed(Duration(milliseconds: 2000));
+                        await Future.delayed(const Duration(milliseconds: 2000));
                     
                         setState(() {
                           areLidsVisible = false;
@@ -611,16 +611,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: maxWidth,
                               height: maxHeight,
                               decoration: BoxDecoration(
-                                color: Color(0xffE788A2),
+                                color: const Color(0xffE788A2),
                                 border: Border.all(
-                                  color: Color(0xffE788A2),
+                                  color: const Color(0xffE788A2),
                                   width: 2,
                                 )
                         
                               ),
                             ),
                                   
-                            Container(
+                            SizedBox(
                               height: maxHeight,
                               child: Image.asset('./assets/images/main_lid.png')
                             )
@@ -671,15 +671,15 @@ class GiftItem extends StatelessWidget {
 
     return Container(
       width: giftWrapConstraints.maxWidth * .4,
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(7),
         boxShadow: [
     
           BoxShadow(
-            color: Color(0xFF000000).withOpacity(0.15),
-            offset: Offset(0, 0),
+            color: const Color(0xFF000000).withOpacity(0.15),
+            offset: const Offset(0, 0),
             blurRadius: 3,
             spreadRadius: 0,
           ),
@@ -695,21 +695,21 @@ class GiftItem extends StatelessWidget {
           AspectRatio(
             aspectRatio: 1/1,
             child: Container(
-              padding: EdgeInsets.all(7),
+              padding: const EdgeInsets.all(7),
               child: Image.asset(giftImage)
             ),
           ),
           
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
       
           // GIFT LABEL
-          Container(
+          SizedBox(
             child: Text(
               giftLabel, 
               textAlign: TextAlign.start,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 height: 1.2,
                 fontWeight: FontWeight.w600,
@@ -717,7 +717,7 @@ class GiftItem extends StatelessWidget {
             )
           ),
           
-          SizedBox(height: 7,),
+          const SizedBox(height: 7,),
           
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -726,7 +726,7 @@ class GiftItem extends StatelessWidget {
           
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Container(
+                child: SizedBox(
                   width: 15,
                   height: 15,
                   // width: screenWidth * .05,
@@ -738,15 +738,15 @@ class GiftItem extends StatelessWidget {
                 ),
               ),
           
-              SizedBox(width: 7),
+              const SizedBox(width: 7),
           
-              Container(
+              SizedBox(
                 child: Text(
                   store.name, 
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                     height: 1.2,
                     fontWeight: FontWeight.w400,
@@ -758,7 +758,7 @@ class GiftItem extends StatelessWidget {
           ),
           
           
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
     
           ElevatedButton(
             style: ButtonStyle(
@@ -828,7 +828,7 @@ class NameInput extends StatelessWidget {
             borderRadius: BorderRadius.circular(9),
             border: Border.all(
               width: 1.2,
-              color: Color(0xffD46E89)
+              color: const Color(0xffD46E89)
             )
           ),
           child: Row(
