@@ -39,6 +39,7 @@ class Variables{
 
   static String googleMapsUrl = 'https://maps.app.goo.gl/RqEMtSJV3GQr73yA9';
 
+  // REGALOS
   static List<Gift> urlsRegalos = [
     
     Gift(
