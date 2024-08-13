@@ -45,20 +45,21 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.topCenter,
               children: [
 
+                // MAIN CONTAINER INVITATION
                 Container(
                   alignment: Alignment.center,
                   width: maxWidth,
                   height: maxHeight,
                   decoration: BoxDecoration(
-                    color: const Color(0xffF9B8CA),
+                    color: const Color(0xffFAF9F6),
                     image: DecorationImage(
-                      image: const AssetImage('./assets/images/floral_background.png',),
-                      opacity: .3,
+                      image: const AssetImage('./assets/images/brown_layout/floral_background.png',),
+                      opacity: .35,
                       fit: BoxFit.none,
                       repeat: ImageRepeat.repeat,
                       scale: 2,
                       colorFilter: ColorFilter.mode(
-                        const Color(0xffFCDEE6).withOpacity(0), // Apply opacity
+                        const Color(0xffFAF9F6).withOpacity(0), // Apply opacity
                         BlendMode.multiply,
                       ),
                     )
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       boxShadow: [
 
                         BoxShadow(
-                          color: const Color(0xFF45112e).withOpacity(0.5),
+                          color: const Color(0xFF45112e).withOpacity(0.2),
                           offset: const Offset(0, 0),
                           blurRadius: 50,
                           spreadRadius: 12,
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: BlendMask(
                                 blendMode: BlendMode.multiply,
                                 child: Image.asset(
-                                  './assets/images/Pink_purple_floral_garden_background_with_watercolor.jpg',
+                                  './assets/images/brown_layout/top_floral_decoration.jpg',
                                   // colorBlendMode: BlendMode.multiply,
                                 ),
                               )
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.cardo(
                                       textStyle: const TextStyle( 
                                         letterSpacing: 5,
-                                        color: Color(0xffB38F84),
+                                        color: Color(0xffB6997F),
                                         fontSize: 30,
                                         fontWeight: FontWeight.w400
                                       ),
@@ -133,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.cardo(
                                       textStyle: const TextStyle( 
                                         letterSpacing: 5,
-                                        color: Color(0xffB38F84),
+                                        color: Color(0xffB6997F),
                                         fontSize: 30,
                                         fontWeight: FontWeight.w400
                                       ),
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.lora(
                                       textStyle: const TextStyle( 
                                         letterSpacing: 5,
-                                        color: Color(0xffD46E89),
+                                        color: Color(0xffD87D96),
                                         fontSize: 17,
                                         fontWeight: FontWeight.w400
                                       ),
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
                                       textStyle: const TextStyle( 
-                                        color: Color(0xffB38F84),
+                                        color: Color(0xffB6997F),
                                         fontSize: 17,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 2
@@ -270,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
                                       textStyle: const TextStyle( 
-                                        color: Color(0xffB38F84),
+                                        color: Color(0xffB6997F),
                                         fontSize: 17,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 2
@@ -297,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   BlendMask(
                                     blendMode: BlendMode.multiply,
-                                    child: Image.asset('./assets/images/top_flower_separator.png')
+                                    child: Image.asset('./assets/images/brown_layout/top_flower_separator.png')
                                   ),
 
                                   const SizedBox(height: 10),
@@ -322,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
                                       textStyle: const TextStyle(
-                                        color: Color(0xffD46E89),
+                                        color: Color(0xffB6997F),
                                         letterSpacing: 1.2,
                                         fontSize: 19,
                                         fontWeight: FontWeight.w700
@@ -349,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   BlendMask(
                                     blendMode: BlendMode.multiply,
-                                    child: Image.asset('./assets/images/bottom_flower_separator.png')
+                                    child: Image.asset('./assets/images/brown_layout/bottom_flower_separator.png')
                                   )
                               
                                 ],
@@ -363,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () => createGoogleCalendarEvent(context, myStartTime, myEndTime),
                               style: ButtonStyle(
                                 overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-                                backgroundColor: const MaterialStatePropertyAll(Color(0xffD46E89)),
+                                backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -474,7 +475,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 softWrap: true,
                                 style: GoogleFonts.lora(
                                   textStyle: const TextStyle( 
-                                    color: Color(0xffD46E89),
+                                    color: Color(0xffB6997F),
                                     letterSpacing: 3,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w600
@@ -489,7 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               onPressed: () => launchGoogleMaps(context, Variables.googleMapsUrl),
                               style: ButtonStyle(
                                 overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-                                backgroundColor: const MaterialStatePropertyAll(Color(0xffD46E89)),
+                                backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -535,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             BlendMask(
                               blendMode: BlendMode.multiply,
                               child: Image.asset(
-                                './assets/images/Pink_purple_floral_garden_background_with_watercolor.jpg',
+                                './assets/images/brown_layout/top_floral_decoration.jpg',
                               ),
                             )
                         
@@ -562,12 +563,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: maxWidth,
                       height: maxHeight,
                       decoration: BoxDecoration(
-                        color: const Color(0xffFCDEE6),
+                        color: const Color(0xffFAF9F6),
                         image: DecorationImage(
-                          image: const AssetImage('./assets/images/floral_swril.png',),
+                          image: const AssetImage('./assets/images/brown_layout/floral_swril.png',),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
-                            const Color(0xffFCDEE6).withOpacity(0.5), // Apply opacity
+                            const Color(0xffFAF9F6).withOpacity(0.5), // Apply opacity
                             BlendMode.dstATop,
                           ),
                         )
@@ -611,9 +612,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: maxWidth,
                               height: maxHeight,
                               decoration: BoxDecoration(
-                                color: const Color(0xffE788A2),
+                                color: const Color(0xffEFD2B7),
                                 border: Border.all(
-                                  color: const Color(0xffE788A2),
+                                  color: const Color(0xffEFD2B7),
                                   width: 2,
                                 )
                         
@@ -622,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   
                             SizedBox(
                               height: maxHeight,
-                              child: Image.asset('./assets/images/main_lid.png')
+                              child: Image.asset(maxWidth >= 500 ? './assets/images/brown_layout/main_lid_big.png' : './assets/images/brown_layout/main_lid.png')
                             )
                                   
                           ],
@@ -763,7 +764,7 @@ class GiftItem extends StatelessWidget {
           ElevatedButton(
             style: ButtonStyle(
               overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-              backgroundColor: const MaterialStatePropertyAll(Color(0xffD46E89)),
+              backgroundColor: const MaterialStatePropertyAll(Color(0xffDCB695)),
               elevation: const MaterialStatePropertyAll(0),
               shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7),
@@ -824,11 +825,11 @@ class NameInput extends StatelessWidget {
         return Container(
           padding: EdgeInsets.only(left: 21, right: inConstraints.maxWidth * .016, top: 0, bottom: 0 ),
           decoration: BoxDecoration(
-            color: const Color(0xffFCF3F5),
+            color: const Color(0xffFCF7F2),
             borderRadius: BorderRadius.circular(9),
             border: Border.all(
               width: 1.2,
-              color: const Color(0xffD46E89)
+              color: const Color(0xffDCB695)
             )
           ),
           child: Row(
@@ -838,17 +839,17 @@ class NameInput extends StatelessWidget {
                 child: TextField(
                   controller: textEditingController,
                   onSubmitted: (value) => launchWhatsApp(context, textEditingController.text),
-                  cursorColor: const Color(0xffD46E89),
+                  cursorColor: const Color(0xffB6997F),
                   textCapitalization: TextCapitalization.words,
                   style: const TextStyle(
-                    color: Color(0xffD46E89)
+                    color: Color(0xffB6997F)
                   ),
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                     border: InputBorder.none,
                     hintText: 'Nombre y Apellido',
                     hintStyle: TextStyle(
-                      color: Color(0xffE199AC),
+                      color: const Color(0xffB6997F).withOpacity(.7),
                       fontSize: 17
                     )
                   ),
@@ -860,7 +861,7 @@ class NameInput extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                   overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-                  backgroundColor: const MaterialStatePropertyAll(Color(0xffD46E89)),
+                  backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
                   elevation: const MaterialStatePropertyAll(0),
                   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7),
