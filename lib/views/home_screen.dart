@@ -1,10 +1,13 @@
 import 'package:babyshower_invitation/config/variables.dart';
 import 'package:babyshower_invitation/enum.dart';
 import 'package:babyshower_invitation/model/gift_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:ui';
 
 
 class HomeScreen extends StatefulWidget {
@@ -30,6 +33,34 @@ class _HomeScreenState extends State<HomeScreen> {
     String myStartTime = variables.getFormattedStartTime();
     String myEndTime = variables.getFormattedEndTime();
 
+    final ScrollController _scrollController = ScrollController();
+    final GlobalKey _key = GlobalKey();
+    final FocusNode _focusNode = FocusNode();
+
+    void scrollToWidget(double screenMaxHeight) async {
+      final context = _key.currentContext;
+      if (context != null) {
+        // Get the position of the target widget
+        final RenderBox box = context.findRenderObject() as RenderBox;
+        final position = box.localToGlobal(Offset.zero, ancestor: null).dy;
+
+        // Get the current scroll position and screen height
+        final currentScrollPosition = _scrollController.offset;
+        final screenHeight = MediaQuery.of(context).size.height;
+
+        // Scroll if the widget is not visible on the screen
+        if (position < currentScrollPosition || position > currentScrollPosition + screenHeight) {
+          _scrollController.animateTo(
+            _scrollController.offset + position - screenMaxHeight / 2,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+
+        Future.delayed(const Duration(milliseconds: 500)).then((value) => _focusNode.requestFocus());
+      }
+    }
+
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -38,6 +69,31 @@ class _HomeScreenState extends State<HomeScreen> {
         double maxHeight = constraints.maxHeight;
 
         return Scaffold(
+          floatingActionButton: areLidsVisible ? null : ClipRRect(
+            borderRadius: BorderRadius.circular(11), // Change the radius here
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: FloatingActionButton.extended(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(11), // Change the radius here
+                ),
+                onPressed: () => scrollToWidget(maxHeight), 
+                elevation: 0,
+                hoverElevation: 0,
+                focusElevation: 0,
+                highlightElevation: 0,
+
+                hoverColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                splashColor: Colors.white.withOpacity(.3),
+
+                label: const Text('RSVP', style: TextStyle(color: Color(0xffB6997F), fontWeight: FontWeight.w600, letterSpacing: 1),),
+                icon: const Icon(Icons.edit, color: Color(0xffB6997F),),
+                backgroundColor: const Color(0xffB6997F).withOpacity(.3),
+              ),
+            ),
+          ),
           body: SizedBox(
             width: maxWidth,
             height: maxHeight,
@@ -46,54 +102,56 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
 
                 // MAIN CONTAINER INVITATION
-                Container(
-                  alignment: Alignment.center,
-                  width: maxWidth,
-                  height: maxHeight,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffFAF9F6),
-                    image: DecorationImage(
-                      image: const AssetImage('./assets/images/brown_layout/floral_background.png',),
-                      opacity: .35,
-                      fit: BoxFit.none,
-                      repeat: ImageRepeat.repeat,
-                      scale: 2,
-                      colorFilter: ColorFilter.mode(
-                        const Color(0xffFAF9F6).withOpacity(0), // Apply opacity
-                        BlendMode.multiply,
+                ScrollConfiguration(
+                  behavior: NoScrollbarBehavior(),
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    controller: _scrollController,
+                    physics: const ClampingScrollPhysics(),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: maxWidth,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFAF9F6),
+                        image: DecorationImage(
+                          image: const AssetImage('./assets/images/brown_layout/floral_background.png',),
+                          opacity: .35,
+                          fit: BoxFit.none,
+                          repeat: ImageRepeat.repeat,
+                          scale: 2,
+                          colorFilter: ColorFilter.mode(
+                            const Color(0xffFAF9F6).withOpacity(0), // Apply opacity
+                            BlendMode.multiply,
+                          ),
+                        )
                       ),
-                    )
-                  ),
-                  child: Container(
-                    width:  maxWidth >= 500 ? 500 : maxWidth,
-                    alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(
-                      // color: const Color(0xffFDF7F8),
-                      color: const Color(0xffFDF7F8),
-                      image: DecorationImage(
-                        image: const AssetImage('./assets/images/paper_texture.jpg',),
-                        opacity: .3,
-                        fit: BoxFit.cover,
-                        colorFilter: ColorFilter.mode(
-                          const Color(0xffFCDEE6).withOpacity(0), // Apply opacity
-                          BlendMode.multiply,
-                        ),
-                      ),
-                      boxShadow: [
-
-                        BoxShadow(
-                          color: const Color(0xFF45112e).withOpacity(0.2),
-                          offset: const Offset(0, 0),
-                          blurRadius: 50,
-                          spreadRadius: 12,
-                        ),
+                      child: Container(
+                        width:  maxWidth >= 500 ? 500 : maxWidth,
+                        alignment: Alignment.topCenter,
+                        decoration: BoxDecoration(
+                          // color: const Color(0xffFDF7F8),
+                          color: const Color(0xffFDF7F8),
+                          image: DecorationImage(
+                            image: const AssetImage('./assets/images/paper_texture.jpg',),
+                            opacity: .3,
+                            fit: BoxFit.none,
+                            repeat: ImageRepeat.repeat,
+                            colorFilter: ColorFilter.mode(
+                              const Color(0xffFCDEE6).withOpacity(0), // Apply opacity
+                              BlendMode.multiply,
+                            ),
+                          ),
+                          boxShadow: [
                       
-                      ]
-                    ),
-                    child: ScrollConfiguration(
-                      behavior: NoScrollbarBehavior(),
-                      child: SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
+                            BoxShadow(
+                              color: const Color(0xFF45112e).withOpacity(0.2),
+                              offset: const Offset(0, 0),
+                              blurRadius: 50,
+                              spreadRadius: 12,
+                            ),
+                          
+                          ]
+                        ),
                         child: Column(
                           children: [
                   
@@ -331,9 +389,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
 
-                                  const SizedBox(height: 7),
+                                  SizedBox(height: 7, key: _key,),
 
-                                  const NameInput(),
+                                  NameInput(focusNode: _focusNode,),
 
                                 ],
                               ),
@@ -418,36 +476,69 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             Image.asset('./assets/images/floral_divider_simple.png'),
                             
-                            const SizedBox(height: 42),
+                            const SizedBox(height: 25),
 
-                            LayoutBuilder(
-                              builder: (context, giftWrapConstraints) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 21),
-                                  child: Wrap(
-                                    spacing: 30,
-                                    runSpacing: 30,
-                                    children: Variables.urlsRegalos.asMap().entries.map((giftItem) {
+                            
 
-                                      int index = giftItem.key;
-                                      Gift gift = giftItem.value;
 
-                                      return GiftItem(
-                                        giftWrapConstraints: giftWrapConstraints, 
-                                        store: gift.store, 
-                                        giftImage: './assets/gifts/gift_${index+1}.jpg',
-                                        giftLabel: gift.label, 
-                                        giftUrl: gift.url,
-                                      );
-
-                                    }).toList(),
-                                  
-                                  ),
-                                );
-                              }
+                            ShaderMask(
+                              shaderCallback: (Rect rect) {
+                                return const LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [ // Opaque in the middle
+                                    Colors.black, // Gradually fades out
+                                    Colors.transparent, // Fully transparent at the bottom
+                                    Colors.transparent, // Fully transparent at the bottom
+                                    Colors.black, // Gradually fades out
+                                  ],
+                                  stops: [0.0, 0.07, 0.93, 1.0], // Control the fade transition points
+                                ).createShader(rect);
+                              },
+                              blendMode: BlendMode.dstOut, 
+                              child: SizedBox(
+                                height: maxHeight * .65,
+                                child: LayoutBuilder(
+                                  builder: (context, giftWrapConstraints) {
+                                    return RawScrollbar(
+                                      trackBorderColor: Colors.transparent,
+                                      crossAxisMargin: 1,
+                                      padding: const EdgeInsets.only(right: 5, top: 30, bottom: 30),
+                                      thumbColor: const Color(0xff805938),
+                                      radius: const Radius.circular(100),
+                                      thumbVisibility: true,
+                                      trackColor: Colors.black.withOpacity(.1),
+                                      trackVisibility: true,
+                                      trackRadius: const Radius.circular(100),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 21),
+                                        child: ListView.builder(
+                                          physics: const ClampingScrollPhysics(),
+                                          itemCount: Variables.urlsRegalos.length,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index){
+                                        
+                                            Gift gift = Variables.urlsRegalos[index];
+                                        
+                                            return GiftTile(
+                                              maxWidth: giftWrapConstraints.maxWidth,
+                                              store: gift.store, 
+                                              giftImage: './assets/gifts/gift_${index+1}.jpeg', 
+                                              giftLabel: gift.label, 
+                                              giftUrl: gift.url,
+                                            );
+                                        
+                                          }
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                ),
+                              ),
                             ),
 
-                            const SizedBox(height: 70),
+
+                            const SizedBox(height: 50),
 
                             Text(
                               'UBICACION', 
@@ -547,9 +638,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-
-
-                    
+       
             
                 // UNDER LID
                 AnimatedPositioned(
@@ -612,9 +701,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: maxWidth,
                               height: maxHeight,
                               decoration: BoxDecoration(
-                                color: const Color(0xffEFD2B7),
+                                color: const Color(0xffD5B79C),
                                 border: Border.all(
-                                  color: const Color(0xffEFD2B7),
+                                  color: const Color(0xffD5B79C),
                                   width: 2,
                                 )
                         
@@ -633,8 +722,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                     
-                    
-                    
+                                        
               ],
             ),
           ),
@@ -645,8 +733,209 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 
-// ignore: constant_identifier_names
 
+
+
+
+
+
+class GiftTile extends StatelessWidget {
+  const GiftTile({
+    super.key, required this.store, required this.giftImage, required this.giftLabel, required this.giftUrl, required this.maxWidth,
+  });
+
+  final double maxWidth;
+  final OnlineStore store;
+  final String giftImage;
+  final String giftLabel;
+  final String giftUrl;
+
+  // style: ButtonStyle(
+  //   padding: const MaterialStatePropertyAll(EdgeInsets.all(21)),
+  //   surfaceTintColor: const MaterialStatePropertyAll(Colors.white),
+  //   overlayColor: MaterialStatePropertyAll(const Color(0xffF9C8D5).withOpacity(.15)),
+  //   backgroundColor: const MaterialStatePropertyAll(Colors.white),
+  //   elevation: const MaterialStatePropertyAll(3),
+  //   shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(0),
+  //     )
+  //   ),
+  // ),
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    String storeIcon = '';
+
+    if(store == OnlineStore.Amazon){
+      storeIcon = './assets/icons/amazon_logo.png';
+    }else if(store == OnlineStore.Walmart){
+      storeIcon = './assets/icons/walmart_logo.png';
+    }else if(store == OnlineStore.Target){
+      storeIcon = './assets/icons/target_logo.png';
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(0),
+      clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.only(bottom: 21),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+
+          BoxShadow(
+            color: const Color(0xFF000000).withOpacity(0.15),
+            offset: const Offset(2, 2),
+            blurRadius: 4,
+            spreadRadius: 0,
+          ),
+      
+        ]
+      ),
+      child: Column(
+        children: [
+      
+          Padding(
+            padding: EdgeInsets.all(maxWidth * .03),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    color: Colors.white,
+                    width: maxWidth * .17,
+                    child: AspectRatio(
+                      aspectRatio: 1/1,
+                      child: Image.asset(giftImage),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 11),
+            
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  
+                      Text(
+                        giftLabel, 
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.inter(
+                          textStyle: TextStyle( 
+                            color: Colors.black.withOpacity(.93),
+                            fontSize: 15,
+                            height: 1.2,
+                            fontWeight: FontWeight.w400
+                          ),
+                        ),
+                      ),
+            
+                      const SizedBox(height: 11,),
+                  
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: SizedBox(
+                              width: 15,
+                              height: 15,
+                              // width: screenWidth * .05,
+                              // height: screenWidth * .05,
+                              child: Image.asset(
+                                storeIcon,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                      
+                          const SizedBox(width: 7),
+                      
+                          SizedBox(
+                            child: Text(
+                              store.name, 
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                height: 1.2,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ),
+                      
+                        ],
+                      ),
+                  
+                    ],
+                  ),
+                )
+            
+            
+            
+                
+              ],
+            ),
+          ),
+        
+          ElevatedButton(
+            style: ButtonStyle(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: maxWidth * .02)),
+              overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
+              backgroundColor: const MaterialStatePropertyAll(Color(0xffDAC0AA)),
+              elevation: const MaterialStatePropertyAll(0),
+              shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(0)),
+                )
+              ),
+            ),
+            onPressed: () => launchGiftLink(context, giftUrl), 
+            child: const Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Icon(Icons.card_giftcard, color: Color(0xff805938),),
+                
+                SizedBox(width: 9,),
+                
+                Text(
+                  'Regalar',
+                  maxLines: 1, 
+                  style: TextStyle(
+                    color: Color(0xff805938), 
+                    fontWeight: FontWeight.w500, 
+                    fontSize: 15,
+                  ),
+                ),
+                
+              ],
+            ),
+                
+          )
+        
+        
+        
+        
+        ],
+      ),
+    );
+  }
+}
+
+
+// ignore: constant_identifier_names
 class GiftItem extends StatelessWidget {
   const GiftItem({
     super.key, required this.giftWrapConstraints, required this.store, required this.giftImage, required this.giftLabel, required this.giftUrl,
@@ -812,8 +1101,10 @@ class GiftItem extends StatelessWidget {
 
 class NameInput extends StatelessWidget {
   const NameInput({
-    super.key,
+    super.key, required this.focusNode,
   });
+
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -837,6 +1128,7 @@ class NameInput extends StatelessWidget {
           
               Flexible(
                 child: TextField(
+                  focusNode: focusNode,
                   controller: textEditingController,
                   onSubmitted: (value) => launchWhatsApp(context, textEditingController.text),
                   cursorColor: const Color(0xffB6997F),
