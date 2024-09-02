@@ -14,6 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     WebRoutes webRoutes = WebRoutes();
     return MaterialApp.router(
+      title: 'Baby Shower Hannah Sofia',
       debugShowCheckedModeBanner: false,
       routeInformationParser: webRoutes.goRouter.routeInformationParser,
       routerDelegate: webRoutes.goRouter.routerDelegate,

@@ -1,13 +1,9 @@
 import 'package:babyshower_invitation/config/variables.dart';
 import 'package:babyshower_invitation/enum.dart';
 import 'package:babyshower_invitation/model/gift_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:ui';
 
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Variables variables = Variables();
 
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _giftsScrollController = ScrollController();
+  final GlobalKey _key = GlobalKey();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +33,30 @@ class _HomeScreenState extends State<HomeScreen> {
     String myStartTime = variables.getFormattedStartTime();
     String myEndTime = variables.getFormattedEndTime();
 
-    final ScrollController _scrollController = ScrollController();
-    final GlobalKey _key = GlobalKey();
-    final FocusNode _focusNode = FocusNode();
 
-    void scrollToWidget(double screenMaxHeight) async {
-      final context = _key.currentContext;
-      if (context != null) {
-        // Get the position of the target widget
-        final RenderBox box = context.findRenderObject() as RenderBox;
-        final position = box.localToGlobal(Offset.zero, ancestor: null).dy;
+    // void scrollToWidget(double screenMaxHeight) async {
+    //   final context = _key.currentContext;
+    //   if (context != null) {
+    //     // Get the position of the target widget
+    //     final RenderBox box = context.findRenderObject() as RenderBox;
+    //     final position = box.localToGlobal(Offset.zero, ancestor: null).dy;
 
-        // Get the current scroll position and screen height
-        final currentScrollPosition = _scrollController.offset;
-        final screenHeight = MediaQuery.of(context).size.height;
+    //     // Get the current scroll position and screen height
+    //     final currentScrollPosition = _scrollController.offset;
+    //     final screenHeight = MediaQuery.of(context).size.height;
 
-        // Scroll if the widget is not visible on the screen
-        if (position < currentScrollPosition || position > currentScrollPosition + screenHeight) {
-          _scrollController.animateTo(
-            _scrollController.offset + position - screenMaxHeight / 2,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-          );
-        }
+    //     // Scroll if the widget is not visible on the screen
+    //     if (position < currentScrollPosition || position > currentScrollPosition + screenHeight) {
+    //       _scrollController.animateTo(
+    //         _scrollController.offset + position - screenMaxHeight / 2,
+    //         duration: const Duration(milliseconds: 500),
+    //         curve: Curves.easeInOut,
+    //       );
+    //     }
 
-        Future.delayed(const Duration(milliseconds: 500)).then((value) => _focusNode.requestFocus());
-      }
-    }
+    //     Future.delayed(const Duration(milliseconds: 500)).then((value) => _focusNode.requestFocus());
+    //   }
+    // }
 
 
     return LayoutBuilder(
@@ -69,31 +66,31 @@ class _HomeScreenState extends State<HomeScreen> {
         double maxHeight = constraints.maxHeight;
 
         return Scaffold(
-          floatingActionButton: areLidsVisible ? null : ClipRRect(
-            borderRadius: BorderRadius.circular(11), // Change the radius here
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: FloatingActionButton.extended(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(11), // Change the radius here
-                ),
-                onPressed: () => scrollToWidget(maxHeight), 
-                elevation: 0,
-                hoverElevation: 0,
-                focusElevation: 0,
-                highlightElevation: 0,
+          // floatingActionButton: areLidsVisible ? null : ClipRRect(
+          //   borderRadius: BorderRadius.circular(11), // Change the radius here
+          //   child: BackdropFilter(
+          //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          //     child: FloatingActionButton.extended(
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(11), // Change the radius here
+          //       ),
+          //       onPressed: () => scrollToWidget(maxHeight), 
+          //       elevation: 0,
+          //       hoverElevation: 0,
+          //       focusElevation: 0,
+          //       highlightElevation: 0,
 
-                hoverColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                foregroundColor: Colors.transparent,
-                splashColor: Colors.white.withOpacity(.3),
+          //       hoverColor: Colors.transparent,
+          //       focusColor: Colors.transparent,
+          //       foregroundColor: Colors.transparent,
+          //       splashColor: Colors.white.withOpacity(.3),
 
-                label: const Text('RSVP', style: TextStyle(color: Color(0xffB6997F), fontWeight: FontWeight.w600, letterSpacing: 1),),
-                icon: const Icon(Icons.edit, color: Color(0xffB6997F),),
-                backgroundColor: const Color(0xffB6997F).withOpacity(.3),
-              ),
-            ),
-          ),
+          //       label: const Text('RSVP', style: TextStyle(color: Color(0xffB6997F), fontWeight: FontWeight.w600, letterSpacing: 1),),
+          //       icon: const Icon(Icons.edit, color: Color(0xffB6997F),),
+          //       backgroundColor: const Color(0xffB6997F).withOpacity(.3),
+          //     ),
+          //   ),
+          // ),
           body: SizedBox(
             width: maxWidth,
             height: maxHeight,
@@ -157,12 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   
                             Transform.rotate(
                               angle: 3.14159,
-                              child: BlendMask(
-                                blendMode: BlendMode.multiply,
-                                child: Image.asset(
-                                  './assets/images/brown_layout/top_floral_decoration.jpg',
-                                  // colorBlendMode: BlendMode.multiply,
-                                ),
+                              child: Image.asset(
+                                './assets/images/brown_layout/top_floral_decoration_new.png',
                               )
                             ),
 
@@ -217,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(height: 40),
 
                                   Text(
-                                    Variables.hora, 
+                                    Variables.mes, 
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.lora(
                                       textStyle: const TextStyle( 
@@ -294,9 +287,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
 
                                             const SizedBox(height: 1),
-                                        
+
                                             Text(
-                                              Variables.mes, 
+                                              Variables.horaRegular, 
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.cardo(
                                                 textStyle: const TextStyle( 
@@ -337,6 +330,175 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                               
+                                  const SizedBox(height: 20),
+
+                                  Text(
+                                    'JARDÍN DE EVENTOS LA PALMA', 
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lora(
+                                      textStyle: const TextStyle( 
+                                        letterSpacing: 1,
+                                        color: Color(0xffB6997F),
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600
+                                      ),
+                                    ),
+                                  ),
+
+                                  // SizedBox(height: 7,),
+
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(horizontal: 21),
+                                  //   child: Text(
+                                  //     Variables.direccion, 
+                                  //     textAlign: TextAlign.center,
+                                  //     softWrap: true,
+                                  //     style: GoogleFonts.lora(
+                                  //       textStyle: const TextStyle( 
+                                  //         color: Color(0xffC78F9E),
+                                  //         letterSpacing: 1,
+                                  //         height: 1.3,
+                                  //         fontSize: 15,
+                                  //         fontWeight: FontWeight.w500
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  const SizedBox(height: 20),
+
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      spacing: 21,
+                                      runSpacing: 21,
+                                      children: [
+                                    
+                                        // CONFIRMAR ASISTENCIA
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
+                                            overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
+                                            backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
+                                            elevation: const MaterialStatePropertyAll(0),
+                                            // shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                            //     borderRadius: BorderRadius.circular(7),
+                                            //   )
+                                            // ),
+                                          ),
+                                          onPressed: () => launchWhatsApp(context), 
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                    
+                                              const Icon(Icons.message_rounded, color: Colors.white, size: 27,),
+                                    
+                                              const SizedBox(width: 12,),
+                                              
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                    
+                                                  Text(
+                                                    'CONFIRMAR', 
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.quicksand(
+                                                      textStyle: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w400,
+                                                        height: 1
+                                                      ),
+                                                    ),
+                                                  ),
+                                    
+                                                  Text(
+                                                    'ASISTENCIA', 
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.quicksand(
+                                                      textStyle: const TextStyle( 
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w400,
+                                                        height: 1
+                                                      ),
+                                                    ),
+                                                  ),
+                                    
+                                                ],
+                                              ),
+                                    
+                                            ],
+                                          ),
+                                                                    
+                                        ),
+
+                                        // VER UBICACION
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 15, horizontal: 15)),
+                                            overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
+                                            backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
+                                            elevation: const MaterialStatePropertyAll(0),
+                                            // shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                            //     borderRadius: BorderRadius.circular(7),
+                                            //   )
+                                            // ),
+                                          ),
+                                          onPressed: () => launchGoogleMaps(context, Variables.googleMapsUrl), 
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                    
+                                              const Icon(Icons.fmd_good_sharp, color: Colors.white, size: 27,),
+                                    
+                                              const SizedBox(width: 12,),
+                                              
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                    
+                                                  Text(
+                                                    'VER', 
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.quicksand(
+                                                      textStyle: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w400,
+                                                        height: 1
+                                                      ),
+                                                    ),
+                                                  ),
+                                    
+                                                  Text(
+                                                    'UBICACION', 
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.quicksand(
+                                                      textStyle: const TextStyle( 
+                                                        color: Colors.white,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w400,
+                                                        height: 1
+                                                      ),
+                                                    ),
+                                                  ),
+                                    
+                                                ],
+                                              ),
+                                    
+                                            ],
+                                          ),
+                                                                    
+                                        ),
+                                    
+                                      ],
+                                    ),
+                                  ),
+
                                   const SizedBox(height: 40),
 
                                   Text(
@@ -352,52 +514,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                               
-                                  const SizedBox(height: 60),
+                                  const SizedBox(height: 40),
+                                  // const SizedBox(height: 60),
 
-                                  BlendMask(
-                                    blendMode: BlendMode.multiply,
-                                    child: Image.asset('./assets/images/brown_layout/top_flower_separator.png')
-                                  ),
+                                  // BlendMask(
+                                  //   blendMode: BlendMode.multiply,
+                                  //   child: Image.asset('./assets/images/brown_layout/top_flower_separator.png')
+                                  // ),
 
-                                  const SizedBox(height: 10),
+                                  // const SizedBox(height: 10),
                               
                                 ],
                               ),
                             ),
 
                             
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 21),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7)
+                            // Container(
+                            //   margin: const EdgeInsets.symmetric(horizontal: 21),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(7)
 
-                              ),
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
+                            //   ),
+                            //   alignment: Alignment.center,
+                            //   child: Column(
+                            //     children: [
 
-                                  Text(
-                                    'CONFIRMACION DE ASISTENCIA', 
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lora(
-                                      textStyle: const TextStyle(
-                                        color: Color(0xffB6997F),
-                                        letterSpacing: 1.2,
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w700
-                                      ),
-                                    ),
-                                  ),
+                            //       Text(
+                            //         'CONFIRMACION DE ASISTENCIA', 
+                            //         textAlign: TextAlign.center,
+                            //         style: GoogleFonts.lora(
+                            //           textStyle: const TextStyle(
+                            //             color: Color(0xffB6997F),
+                            //             letterSpacing: 1.2,
+                            //             fontSize: 19,
+                            //             fontWeight: FontWeight.w700
+                            //           ),
+                            //         ),
+                            //       ),
 
-                                  SizedBox(height: 7, key: _key,),
+                            //       SizedBox(height: 7, key: _key,),
 
-                                  NameInput(focusNode: _focusNode,),
+                            //       NameInput(focusNode: _focusNode,),
 
-                                ],
-                              ),
-                            ),
+                            //     ],
+                            //   ),
+                            // ),
 
-                            const SizedBox(height: 10),
+                            // const SizedBox(height: 10),
 
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 21),
@@ -406,59 +569,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               
                                   const SizedBox(height: 10),
 
-                                  BlendMask(
-                                    blendMode: BlendMode.multiply,
-                                    child: Image.asset('./assets/images/brown_layout/bottom_flower_separator.png')
-                                  )
+                                  Image.asset('./assets/images/brown_layout/top_flower_separator_new.png')
                               
                                 ],
                               ),
                             ),
 
-                            const SizedBox(height: 42),
+                            const SizedBox(height: 12),
 
 
-                            ElevatedButton(
-                              onPressed: () => createGoogleCalendarEvent(context, myStartTime, myEndTime),
-                              style: ButtonStyle(
-                                overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-                                backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(vertical: 7),
-                                    width: 35,
-                                    height: 35,
-                                    child: Image.asset('./assets/icons/google-calendar.png')
-                                  ),
-                              
-                                  const SizedBox(width: 11),
-                              
-                                  Flexible(
-                                    child: Text(
-                                      'Agregar a Google Calendar', 
-                                      textAlign: TextAlign.center,
-                                      softWrap: true,
-                                      style: GoogleFonts.lora(
-                                        textStyle: const TextStyle( 
-                                          color: Colors.white,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w400
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              
-                                ],
-                              ),
-                            ),
-
-                            const SizedBox(height: 60),
+                            // const SizedBox(height: 60),
 
                             Text(
                               'MESA DE REGALOS', 
@@ -478,29 +598,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                             const SizedBox(height: 25),
 
-                            
-
-
-                            ShaderMask(
-                              shaderCallback: (Rect rect) {
-                                return const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [ // Opaque in the middle
-                                    Colors.black, // Gradually fades out
-                                    Colors.transparent, // Fully transparent at the bottom
-                                    Colors.transparent, // Fully transparent at the bottom
-                                    Colors.black, // Gradually fades out
-                                  ],
-                                  stops: [0.0, 0.07, 0.93, 1.0], // Control the fade transition points
-                                ).createShader(rect);
-                              },
-                              blendMode: BlendMode.dstOut, 
+                            Container(
+                              color: const Color(0xffB38F84).withOpacity(.3),
+                              padding: const EdgeInsets.only(bottom: 50, top: 50),
                               child: SizedBox(
                                 height: maxHeight * .65,
                                 child: LayoutBuilder(
                                   builder: (context, giftWrapConstraints) {
                                     return RawScrollbar(
+                                      controller: _giftsScrollController,
                                       trackBorderColor: Colors.transparent,
                                       crossAxisMargin: 1,
                                       padding: const EdgeInsets.only(right: 5, top: 30, bottom: 30),
@@ -513,6 +619,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 21),
                                         child: ListView.builder(
+                                          controller: _giftsScrollController,
                                           physics: const ClampingScrollPhysics(),
                                           itemCount: Variables.urlsRegalos.length,
                                           shrinkWrap: true,
@@ -537,75 +644,98 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
 
-
-                            const SizedBox(height: 50),
-
-                            Text(
-                              'UBICACION', 
-                              textAlign: TextAlign.center,
-                              softWrap: true,
-                              style: GoogleFonts.lora(
-                                textStyle: const TextStyle( 
-                                  color: Color(0xffB38F84),
-                                  letterSpacing: 3,
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.w700
-                                ),
-                              ),
-                            ),
-
-                            Image.asset('./assets/images/floral_divider_simple.png'),
-                            
-                            const SizedBox(height: 35),
-
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 21),
-                              child: Text(
-                                Variables.direccion, 
-                                textAlign: TextAlign.center,
-                                softWrap: true,
-                                style: GoogleFonts.lora(
-                                  textStyle: const TextStyle( 
-                                    color: Color(0xffB6997F),
-                                    letterSpacing: 3,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(height: 21),
+                            const SizedBox(height: 42),
 
                             ElevatedButton(
-                              onPressed: () => launchGoogleMaps(context, Variables.googleMapsUrl),
+                              onPressed: () => createGoogleCalendarEvent(context, myStartTime, myEndTime),
                               style: ButtonStyle(
+                                padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12, horizontal: 21)),
                                 overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
                                 backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-
-                                  const Icon(Icons.location_on_outlined, color: Colors.white,),
-
-                                  const SizedBox(width: 12),
-
-                                  Text(
-                                    'Abrir en Google Maps', 
-                                    textAlign: TextAlign.center,
-                                    softWrap: true,
-                                    style: GoogleFonts.lora(
-                                      textStyle: const TextStyle( 
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500
+                                  
+                                  const Icon(Icons.calendar_month_outlined, color: Colors.white, size: 27,),
+                              
+                                  const SizedBox(width: 11),
+                              
+                                  Flexible(
+                                    child: Text(
+                                      'Agregar a Google Calendar', 
+                                      textAlign: TextAlign.center,
+                                      softWrap: true,
+                                      style: GoogleFonts.lora(
+                                        textStyle: const TextStyle( 
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600
+                                        ),
                                       ),
                                     ),
                                   ),
+                              
                                 ],
                               ),
                             ),
+
+
+                            const SizedBox(height: 50),
+
+                            // Text(
+                            //   'UBICACION', 
+                            //   textAlign: TextAlign.center,
+                            //   softWrap: true,
+                            //   style: GoogleFonts.lora(
+                            //     textStyle: const TextStyle( 
+                            //       color: Color(0xffB38F84),
+                            //       letterSpacing: 3,
+                            //       fontSize: 21,
+                            //       fontWeight: FontWeight.w700
+                            //     ),
+                            //   ),
+                            // ),
+
+                            // Image.asset('./assets/images/floral_divider_simple.png'),
+                            
+                            // const SizedBox(height: 35),
+
+
+
+                            // const SizedBox(height: 21),
+
+                            // ElevatedButton(
+                            //   onPressed: () => launchGoogleMaps(context, Variables.googleMapsUrl),
+                            //   style: ButtonStyle(
+                            //     overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
+                            //     backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
+                            //   ),
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.min,
+                            //     children: [
+
+                            //       const Icon(Icons.location_on_outlined, color: Colors.white,),
+
+                            //       const SizedBox(width: 12),
+
+                            //       Text(
+                            //         'Abrir en Google Maps', 
+                            //         textAlign: TextAlign.center,
+                            //         softWrap: true,
+                            //         style: GoogleFonts.lora(
+                            //           textStyle: const TextStyle( 
+                            //             color: Colors.white,
+                            //             fontSize: 17,
+                            //             fontWeight: FontWeight.w500
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
 
 
 
@@ -622,13 +752,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         
                             
-                            const SizedBox(height: 100),
+                            const SizedBox(height: 50),
 
-                            BlendMask(
-                              blendMode: BlendMode.multiply,
-                              child: Image.asset(
-                                './assets/images/brown_layout/top_floral_decoration.jpg',
-                              ),
+                            Image.asset(
+                              './assets/images/brown_layout/top_floral_decoration_new.png',
                             )
                         
                         
@@ -935,315 +1062,10 @@ class GiftTile extends StatelessWidget {
 }
 
 
-// ignore: constant_identifier_names
-class GiftItem extends StatelessWidget {
-  const GiftItem({
-    super.key, required this.giftWrapConstraints, required this.store, required this.giftImage, required this.giftLabel, required this.giftUrl,
-  });
-
-  final BoxConstraints giftWrapConstraints; 
-  final OnlineStore store;
-  final String giftImage;
-  final String giftLabel;
-  final String giftUrl;
-
-  @override
-  Widget build(BuildContext context) {
-
-    String storeIcon = '';
-
-    if(store == OnlineStore.Amazon){
-      storeIcon = './assets/icons/amazon_logo.png';
-    }else if(store == OnlineStore.Walmart){
-      storeIcon = './assets/icons/walmart_logo.png';
-    }
-
-
-    return Container(
-      width: giftWrapConstraints.maxWidth * .4,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(7),
-        boxShadow: [
-    
-          BoxShadow(
-            color: const Color(0xFF000000).withOpacity(0.15),
-            offset: const Offset(0, 0),
-            blurRadius: 3,
-            spreadRadius: 0,
-          ),
-          
-        ]
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-            
-          // GIFT IMAGE
-          AspectRatio(
-            aspectRatio: 1/1,
-            child: Container(
-              padding: const EdgeInsets.all(7),
-              child: Image.asset(giftImage)
-            ),
-          ),
-          
-          const SizedBox(height: 15),
-      
-          // GIFT LABEL
-          SizedBox(
-            child: Text(
-              giftLabel, 
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 15,
-                height: 1.2,
-                fontWeight: FontWeight.w600,
-              ),
-            )
-          ),
-          
-          const SizedBox(height: 7,),
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-          
-              ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: SizedBox(
-                  width: 15,
-                  height: 15,
-                  // width: screenWidth * .05,
-                  // height: screenWidth * .05,
-                  child: Image.asset(
-                    storeIcon,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-          
-              const SizedBox(width: 7),
-          
-              SizedBox(
-                child: Text(
-                  store.name, 
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    height: 1.2,
-                    fontWeight: FontWeight.w400,
-                  ),
-                )
-              ),
-          
-            ],
-          ),
-          
-          
-          const SizedBox(height: 22),
-    
-          ElevatedButton(
-            style: ButtonStyle(
-              overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-              backgroundColor: const MaterialStatePropertyAll(Color(0xffDCB695)),
-              elevation: const MaterialStatePropertyAll(0),
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7),
-                )
-              ),
-            ),
-            onPressed: () => launchGiftLink(context, giftUrl), 
-            child: const Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-    
-                Icon(Icons.card_giftcard, color: Colors.white,),
-                
-                SizedBox(width: 9,),
-                Flexible(
-                  child: Text(
-                    'Regalar',
-                    maxLines: 1, 
-                    style: TextStyle(
-                      color: Colors.white, 
-                      fontWeight: FontWeight.w500, 
-                      fontSize: 15,
-                    ),
-                  )
-                ),
-    
-    
-    
-    
-              ],
-            ),
-    
-          )
-          
-        
-      
-      
-      
-        ],
-      ),
-    );
-  }
-}
-
-class NameInput extends StatelessWidget {
-  const NameInput({
-    super.key, required this.focusNode,
-  });
-
-  final FocusNode focusNode;
-
-  @override
-  Widget build(BuildContext context) {
-
-    TextEditingController textEditingController = TextEditingController();
-
-    return LayoutBuilder(
-      builder: (context, inConstraints) {
-        return Container(
-          padding: EdgeInsets.only(left: 21, right: inConstraints.maxWidth * .016, top: 0, bottom: 0 ),
-          decoration: BoxDecoration(
-            color: const Color(0xffFCF7F2),
-            borderRadius: BorderRadius.circular(9),
-            border: Border.all(
-              width: 1.2,
-              color: const Color(0xffDCB695)
-            )
-          ),
-          child: Row(
-            children: [
-          
-              Flexible(
-                child: TextField(
-                  focusNode: focusNode,
-                  controller: textEditingController,
-                  onSubmitted: (value) => launchWhatsApp(context, textEditingController.text),
-                  cursorColor: const Color(0xffB6997F),
-                  textCapitalization: TextCapitalization.words,
-                  style: const TextStyle(
-                    color: Color(0xffB6997F)
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    border: InputBorder.none,
-                    hintText: 'Nombre y Apellido',
-                    hintStyle: TextStyle(
-                      color: const Color(0xffB6997F).withOpacity(.7),
-                      fontSize: 17
-                    )
-                  ),
-                ),
-              ),
-    
-              SizedBox(width: inConstraints.maxWidth * .02),
-        
-              ElevatedButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStatePropertyAll(Colors.white.withOpacity(.3)),
-                  backgroundColor: const MaterialStatePropertyAll(Color(0xffD4B79D)),
-                  elevation: const MaterialStatePropertyAll(0),
-                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7),
-                    )
-                  ),
-                ),
-                onPressed: () => launchWhatsApp(context, textEditingController.text), 
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    
-                    Text(
-                      'Enviar', 
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lora(
-                        textStyle: const TextStyle( 
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w400
-                        ),
-                      ),
-                    ),
-        
-        
-        
-        
-                  ],
-                ),
-        
-              )
-          
-            ],
-          ),
-        );
-      }
-    );
-  }
-}
-
 class NoScrollbarBehavior extends ScrollBehavior {
   @override
   Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
     return child;
-  }
-}
-
-// Applies a BlendMode to its child.
-class BlendMask extends SingleChildRenderObjectWidget {
-  final BlendMode blendMode;
-  final double opacity;
-
-  const BlendMask({
-    required this.blendMode,
-    this.opacity = 1.0,
-    super.key,
-    super.child,
-  });
-
-  @override
-  RenderObject createRenderObject(context) {
-    return RenderBlendMask(blendMode, opacity);
-  }
-
-  @override
-  void updateRenderObject(BuildContext context, RenderBlendMask renderObject) {
-    renderObject.blendMode = blendMode;
-    renderObject.opacity = opacity;
-  }
-}
-
-class RenderBlendMask extends RenderProxyBox {
-  BlendMode blendMode;
-  double opacity;
-
-  RenderBlendMask(this.blendMode, this.opacity);
-
-  @override
-  void paint(context, offset) {
-    // Create a new layer and specify the blend mode and opacity to composite it with:
-    context.canvas.saveLayer(
-      offset & size,
-      Paint()
-        ..blendMode = blendMode
-        ..color = Color.fromARGB((opacity * 255).round(), 255, 255, 255),
-    );
-
-    super.paint(context, offset);
-
-    // Composite the layer back into the canvas using the blendmode:
-    context.canvas.restore();
   }
 }
 
@@ -1265,19 +1087,19 @@ Future<void> launchGoogleMaps(BuildContext context, String googleMapsUrl) async 
   }
 }
 
-Future<void> launchWhatsApp(BuildContext context, String fullname) async {
+Future<void> launchWhatsApp(BuildContext context) async {
 
-  if (fullname.isEmpty){
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Es necesario tu Nombre y Apellido'),
-        duration: Duration(seconds: 2), // Customize the duration (default 4 seconds)
-      ),
-    );
-    return;
-  }
+  // if (fullname.isEmpty){
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(
+  //       content: Text('Es necesario tu Nombre y Apellido'),
+  //       duration: Duration(seconds: 2), // Customize the duration (default 4 seconds)
+  //     ),
+  //   );
+  //   return;
+  // }
   
-  String message = 'Confirmo mi asistencia como "$fullname" al baby shower!.';
+  String message = 'Confirmo mi asistencia al baby shower!.';
   String contact = Variables.numeroDeTelefono;
   
   String webUrl = 'https://api.whatsapp.com/send/?phone=$contact&text=$message';

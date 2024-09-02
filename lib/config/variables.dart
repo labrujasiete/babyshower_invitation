@@ -20,6 +20,7 @@ class Variables{
 
   // FEHCA Y HORA
   static String hora = '14:00';
+  static String horaRegular = '02:00 PM';
   static String horaFin = '20:00';
   static String diaDeLaSemana = 'DOMINGO';
   static String diaNumerico = '06';
